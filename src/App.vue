@@ -84,6 +84,9 @@
                                 <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
                             </td>
                             <td class="px-6 py-4 text-right">
+                                <button type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Mark Done</button>&nbsp;
+                                
                                 <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Delete</button>
                                 
@@ -131,6 +134,8 @@
 
         
     };
+
+   
 
 
 </script>
