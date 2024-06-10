@@ -1,9 +1,14 @@
 
 <template>
+    
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+        
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+            
+            <h5 class="text-3xl font-extrabold dark:text-white text-center mt-4">To-Do List</h5>
+
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                     <button type="button" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
@@ -12,7 +17,7 @@
                         </svg>
                         New Task
                     </button>
-                    <div class="flex items-center space-x-3 w-full md:w-auto">
+                    <!-- <div class="flex items-center space-x-3 w-full md:w-auto">
                         <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
                                 <li>
@@ -45,7 +50,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -70,27 +75,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(item, index) in fetchedTasks" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="px-6 py-4">{{ index ++ }}</td>
-                        <td class="px-4 py-3">{{ item.task_name }}</td>
-                        <td class="px-4 py-3">{{ item.due_date }}</td>
-                        <td class="px-4 py-3">
-                            <span v-if="item.completed === 1" class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
-                            <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                               Delete</button>
-                            
-                        </td>
-                    </tr>
+                        <tr v-for="(item, index) in fetchedTasks" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4">{{ index ++ }}</td>
+                            <td class="px-4 py-3">{{ item.task_name }}</td>
+                            <td class="px-4 py-3">{{ item.due_date }}</td>
+                            <td class="px-4 py-3">
+                                <span v-if="item.completed === 1" class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
+                                <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Delete</button>
+                                
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     </div>
+    </section>
+
  
 
     <newTask />
