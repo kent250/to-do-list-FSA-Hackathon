@@ -70,15 +70,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(item, index) in data" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="px-6 py-4">{{ index++ }}</td>
+                    <tr v-for="(item, index) in fetchedTasks" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">{{ index ++ }}</td>
                         <td class="px-4 py-3">{{ item.task_name }}</td>
                         <td class="px-4 py-3">{{ item.due_date }}</td>
                         <td class="px-4 py-3">
-                        {{ item.completed === 1 ? 'Done' : 'Not Done' }}
+                            <span v-if="item.completed === 1" class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
+                            <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
                         </td>
                         <td class="px-6 py-4 text-right">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                               Delete</button>
+                            
                         </td>
                     </tr>
                     </tbody>
@@ -88,26 +91,42 @@
 
         </div>
     </div>
-    </section>
+ 
+
     <newTask />
+
+   
 </template>
 <script setup>
     import newTask from './components/newTask.vue';
     import { onMounted, ref } from 'vue';
 
+    const fetchedTasks = ref(null);
+
+  
+    async function fetchData() {
+        const url = `http://localhost:3000/tasks`; 
+        
+        const response = await fetch(url);
+        const fetchedData = await response.json();
+        fetchedTasks.value = fetchedData;
+    }
     
-
-    const data = ref(null);
+    
   
-  async function fetchData() {
-      const url = `http://localhost:3000/tasks`; // Assuming root route for fetching data
+    onMounted(fetchData);
+    
+    
+    const deleteTask = async (taskId, taskName) => {
+        if(confirm(`Are you sure you want to delete task with ${taskName}?`)){
+            const url = `http://localhost:3000/tasks/${taskId}`;
+        const response = await fetch(url, {method: 'DELETE',});
+        await fetchData();
+        }
 
-      const response = await fetch(url);
-      const fetchedData = await response.json();
-      data.value = fetchedData;
-  }
-  
-  onMounted(fetchData); 
+        
+    };
+
 
 </script>
 
