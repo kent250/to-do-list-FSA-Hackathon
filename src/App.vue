@@ -1,3 +1,4 @@
+
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -69,24 +70,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="px-6 py-4">
-                                1
-                            </td>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                               Task 1
-                            </th>
-                            <td class="px-6 py-4">
-                                12/12/2024
-                            </td>
-                            <td class="px-6 py-4">
-                                Completed
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td>
-                        </tr>
-
+                    <tr v-for="(item, index) in data" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">1 </td>
+                        <td class="px-4 py-3">{{ item.task_name }}</td>
+                        <td class="px-4 py-3">{{ item.due_date }}</td>
+                        <td class="px-4 py-3">
+                        {{ item.completed === 1 ? 'Done' : 'Not Done' }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -101,17 +95,22 @@
     import newTask from './components/newTask.vue';
     import { onMounted, ref } from 'vue';
 
+    
+
     const data = ref(null);
+  
+  async function fetchData() {
+      const url = `http://localhost:3000/tasks`; // Assuming root route for fetching data
 
-    async function fetchTasks(){
-        const url = `http://localhost:3000/tasks`;
-
-        const response = await fetch(url);
-        const fetchedData = await response.json();
-        data.value = fetchedTasks;
-    }
-
-    onMounted(fetchTasks)
+      const response = await fetch(url);
+      const fetchedData = await response.json();
+      data.value = fetchedData;
+  }
+  
+  onMounted(fetchData); 
 
 </script>
+
+
+
 
