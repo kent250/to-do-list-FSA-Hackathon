@@ -71,7 +71,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(item, index) in data" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="px-6 py-4">1 </td>
+                        <td class="px-6 py-4">{{ index++ }}</td>
                         <td class="px-4 py-3">{{ item.task_name }}</td>
                         <td class="px-4 py-3">{{ item.due_date }}</td>
                         <td class="px-4 py-3">
