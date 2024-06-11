@@ -78,13 +78,13 @@
                         <tr v-for="(item, index) in fetchedTasks" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4">{{ index ++ }}</td>
                             <td class="px-4 py-3">{{ item.task_name }}</td>
-                            <td class="px-4 py-3">{{ item.due_date }}</td>
+                            <td class="px-4 py-3">{{ formatDate(item.due_date) }}</td>
                             <td class="px-4 py-3">
                                 <span v-if="item.completed === 1" class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
                                 <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <button @click="markCompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <button v-if="item.completed === 0" @click="markCompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Mark Done</button>&nbsp;
                                 
                                 <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -140,9 +140,14 @@
             const response = await fetch(url, {method: 'PUT',});
             await fetchData();
         }
- 
+    };
 
-    }
+    const formatDate = (dateString) => {
+  // Choose your preferred formatting method (replace with your choice)
+    const dateObject = new Date(dateString);
+    const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate()}`;
+    return formattedDate;
+    };
 
    
 
