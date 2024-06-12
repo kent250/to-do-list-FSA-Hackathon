@@ -17,17 +17,8 @@
                         </svg>
                         New Task
                     </button>
-                    <!-- <div class="flex items-center space-x-3 w-full md:w-auto">
-                        <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
-                                <li>
-                                    <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass Edit</a>
-                                </li>
-                            </ul>
-                            <div class="py-1">
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete all</a>
-                            </div>
-                        </div>
+
+                     <div class="flex items-center space-x-3 w-full md:w-auto">  
                         <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-4 w-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
@@ -38,19 +29,25 @@
                             </svg>
                         </button>
                         <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
-                            <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Choose brand</h6>
+                            <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Choose option</h6>
                             <ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
                                 <li class="flex items-center">
-                                    <input id="apple" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Apple (56)</label>
+                                    <input  id="all" v-model="filterType" type="radio" value="all" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label   class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">All</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="fitbit" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Microsoft (16)</label>
+                                    <input  id="completed" v-model="filterType" type="radio" value="completed" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label   class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Completed</label>
                                 </li>
+                                <li class="flex items-center">
+                                    <input  id="uncompleted" v-model="filterType" type="radio" value="uncompleted" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Uncompleted</label>
+                                </li>
+                                
                             </ul>
                         </div>
-                    </div> -->
+                    </div>
+                     
                 </div>
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -75,7 +72,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in fetchedTasks" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr v-for="(item, index) in filteredTasks" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4">{{ index ++ }}</td>
                             <td class="px-4 py-3">{{ item.task_name }}</td>
                             <td class="px-4 py-3">{{ formatDate(item.due_date) }}</td>
@@ -108,24 +105,40 @@
 </template>
 <script setup>
    import newTask from '../components/newTask.vue';
-    import { onMounted, ref } from 'vue';
+   import { computed, onMounted, ref } from 'vue';
 
     const fetchedTasks = ref(null);
+    const filterCompleted = ref(false);
+    const filterType = ref('all');
+   
 
   
     async function fetchData() {
         const url = `http://localhost:3000/tasks`; 
-        
         const response = await fetch(url);
         const fetchedData = await response.json();
+        fetchedData.sort((a, b) => a.completed - b.completed); 
         fetchedTasks.value = fetchedData;
+
     }
     
     
   
     onMounted(fetchData);
     
-    
+    const filteredTasks = computed(() => {
+  switch (filterType.value) {
+    case "completed":
+      return fetchedTasks.value.filter(task => task.completed === 1);
+    case "uncompleted":
+      return fetchedTasks.value.filter(task => task.completed !== 1);
+    case "all":
+    default:
+      return fetchedTasks.value;
+  }
+});
+
+
     const deleteTask = async (taskId, taskName) => {
         if(confirm(`Are you sure you want to delete task with ${taskName}?`)){
             const url = `http://localhost:3000/tasks/${taskId}`;
