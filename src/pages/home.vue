@@ -86,6 +86,9 @@
                             <td class="px-6 py-4 text-right">
                                 <button v-if="item.completed === 0" @click="markCompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Mark Done</button>&nbsp;
+
+                                <button v-else="item.completed === 1" @click="markUncompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                Mark Undone</button>&nbsp;
                                 
                                 <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Delete</button>
@@ -98,9 +101,7 @@
         </div>
     </div>
     </section>
-
- 
-
+    
     <newTask />
 
    
@@ -141,6 +142,15 @@
             await fetchData();
         }
     };
+
+    const markUncompleted = async(taskName, taskId) => {
+        if(confirm(` Mark Task ${taskName} uncompleted?`))
+        {
+            const url = `http://localhost:3000/tasks/${taskId}/uncompleted`;
+            const response = await fetch(url, {method: 'PUT',});
+            await fetchData();
+        }
+    }
 
     const formatDate = (dateString) => {
     const dateObject = new Date(dateString);
