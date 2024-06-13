@@ -80,16 +80,17 @@
                                 
                                 <td class="px-4 py-3">
                                     <span v-if="item.completed === 1" class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
-                                    <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
+                                    <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending</span>
                                     &nbsp;<span v-if="isDueDatePassed(item.due_date, returnCurrentDate()) && item.completed === 0 " class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Over Due</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button v-if="item.completed === 0" @click="markCompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Mark Done</button>&nbsp;
+                                    
 
                                     <button v-else="item.completed === 1" @click="markUncompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                     Mark Undone</button>&nbsp;
-                                    
+                                   
                                     <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Delete</button>
                                 </td>
