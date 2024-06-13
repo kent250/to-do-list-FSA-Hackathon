@@ -1,5 +1,7 @@
 
 <template>
+    <!-- <test /> -->
+
      <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5"> 
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -60,6 +62,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Due Date
                                 </th>
+                                
                                 <th scope="col" class="px-6 py-3">
                                     Status
                                 </th>
@@ -73,10 +76,12 @@
                                 <td class="px-6 py-4">{{ index ++ }}</td>
                                 <td class="px-4 py-3">{{ item.task_name }}</td>
                                 <td class="px-4 py-3">{{ formatDate(item.due_date) }}</td>
+                              
                                 
                                 <td class="px-4 py-3">
                                     <span v-if="item.completed === 1" class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
                                     <span v-else class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Not Done</span>
+                                    &nbsp;<span v-if="isDueDatePassed(item.due_date, returnCurrentDate()) && item.completed === 0 " class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Over Due</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button v-if="item.completed === 0" @click="markCompleted(item.task_name,item.id)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -106,11 +111,10 @@
 
 import { computed, onMounted, ref } from 'vue';
 
+import test from '../components/test.vue';
 import newTask from '../components/newTask.vue';
-import { formatDate, returnCurrentDate } from '../functions.js'
-document.addEventListener("DOMContentLoaded", function(event) {
-    document.getElementById('updateProductButton').click();
-});
+import { formatDate, returnCurrentDate, isDueDatePassed } from '../functions.js'
+
 const fetchedTasks = ref(null);
 const filterCompleted = ref(false);
 const filterType = ref('all');
