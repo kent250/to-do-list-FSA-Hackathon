@@ -1,6 +1,5 @@
 
 <template>
-    <!-- <test /> -->
 
      <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5"> 
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -95,9 +94,9 @@
                                     <button @click="deleteTask(item.id, item.task_name)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Delete</button>&nbsp;
 
-                                    <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        Edit</button>&nbsp;
-                                
+                                    <router-link :to="{ path: `/edit/${item.id}` }"  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Edit
+                                    </router-link>&nbsp;
                                 </td>
                             </tr>
                         </tbody>
@@ -109,7 +108,7 @@
         
     </section>
    
-    <editTask />
+    
     <newTask />
 
 </template>
@@ -119,7 +118,7 @@
 import { computed, onMounted, ref } from 'vue';
 
 
-import test from '../components/test.vue';
+
 import newTask from '../components/newTask.vue';
 import editTask from '../components/editTask.vue';
 import { formatDate, returnCurrentDate, isDueDatePassed } from '../functions.js'
