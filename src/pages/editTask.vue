@@ -15,8 +15,7 @@
               </router-link>
             </div>
           </div>
-  
-          <form class="max-w-sm mx-auto" v-if="fetchedTasks">
+          <form class="max-w-sm mx-auto" v-if="fetchedTasks" @submit.prevent="updateTask">
             <div class="mb-5">
               <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task</label>
               <input
@@ -29,11 +28,11 @@
             <div class="mb-5">
               <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Due date</label>
               <input
-  type="date"
-  id="base-input"
-  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-  v-model="formattedDueDate"
-/>
+                type="date"
+                id="base-input"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                v-model="formattedDueDate"
+                />
             </div>
             <div class="mb-5">
               <button
@@ -54,6 +53,17 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const fetchedTasks = ref(null);
+const editedDueDate = ref('');
+
+const task = ref({
+    task_name: '',
+    due_date: '2024-06-27',
+});
+
+const taskTest = ref({
+    task_name: '',
+    due_date: '',
+});
 
 const route = useRoute(); // Access route information
 
@@ -64,8 +74,13 @@ async function fetchData() {
     const response = await fetch(url);
     const fetchedData = await response.json(); 
     fetchedTasks.value = fetchedData;
-    console.log('Fetched task data:', fetchedData);
+    
+    task.value = {
+    task_name: fetchedData.task_name,
+    due_date: fetchedData.due_date,
+  };
 }
+
 
 onMounted(fetchData);
 
