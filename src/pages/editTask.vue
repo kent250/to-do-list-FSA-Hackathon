@@ -52,6 +52,8 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+const baseUrl = "https://todolist-fsa-backend.onrender.com";
+
 const fetchedTasks = ref(null);
 const editedDueDate = ref('');
 
@@ -69,7 +71,7 @@ const route = useRoute(); // Access route information
 
 async function fetchData() {
     const id =  route.params.taskId;
-    const url = `http://localhost:3000/tasks/${id}`; 
+    const url = `${baseUrl}/tasks/${id}`; 
 
     const response = await fetch(url);
     const fetchedData = await response.json(); 

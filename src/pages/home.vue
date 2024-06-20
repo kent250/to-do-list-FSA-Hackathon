@@ -115,11 +115,13 @@ const fetchedTasks = ref(null);
 const filterCompleted = ref(false);
 const filterType = ref('all');
 
+const baseUrl = "https://todolist-fsa-backend.onrender.com";
+
 onMounted(fetchData);
 
 //fetching all tasks
 async function fetchData() {
-    const url = `http://localhost:3000/tasks/`; 
+    const url = `${baseUrl}/tasks/`; 
 
     const response = await fetch(url);
     const fetchedData = await response.json();
@@ -130,7 +132,7 @@ async function fetchData() {
 //deleting a task 
 const deleteTask = async (taskId, taskName) => {
     if(confirm(`Are you sure you want to delete task with ${taskName}?`)){
-        const url = `http://localhost:3000/tasks/${taskId}`;
+        const url = `${baseUrl}/tasks/${taskId}`;
         const response = await fetch(url, {method: 'DELETE',});
         await fetchData();
     }
@@ -138,7 +140,7 @@ const deleteTask = async (taskId, taskName) => {
 // marking Task Completed
 const markCompleted = async(taskName, taskId) => {
     if(confirm(` Mark Task ${taskName} Completed?`)){
-        const url = `http://localhost:3000/tasks/${taskId}/completed`;
+        const url = `${baseUrl}/tasks/${taskId}/completed`;
         const response = await fetch(url, {method: 'PUT',});
         await fetchData();
     }
@@ -146,7 +148,7 @@ const markCompleted = async(taskName, taskId) => {
 //marking Task Uncompleted
 const markUncompleted = async(taskName, taskId) => {
     if(confirm(` Mark Task ${taskName} uncompleted?`)){
-        const url = `http://localhost:3000/tasks/${taskId}/uncompleted`;
+        const url = `${baseUrl}/tasks/${taskId}/uncompleted`;
         const response = await fetch(url, {method: 'PUT',});
         await fetchData();
     }
